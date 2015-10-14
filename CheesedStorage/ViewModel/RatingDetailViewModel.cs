@@ -2,12 +2,15 @@
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.IO;
 
 namespace CheesedStorage.Local
 {
-	public class RatingDetailViewModel : INotifyPropertyChanged
+	public class RatingDetailViewModel : INotifyPropertyChanged, IDisposable
 	{
 		readonly ICheeseDataService _dataService;
+		readonly ICheeseStorageService _storageService;
+
 		ContentPage Page;
 
 		public string Title {
@@ -35,9 +38,25 @@ namespace CheesedStorage.Local
 			set;
 		}
 
+		public Stream CheesePhoto {
+			get;
+			set;
+		}
+
+		public Uri CheesePhotoUri {
+			get;
+			set;
+		}
+
+		public byte[] PhotoBytes {
+			get;
+			set;
+		}
+
 		public RatingDetailViewModel (CheeseAndRating rating, ContentPage page)
 		{
 			_dataService = DependencyService.Get<ICheeseDataService> ();
+			_storageService = DependencyService.Get<ICheeseStorageService> ();
 
 			Page = page;
 
@@ -53,11 +72,11 @@ namespace CheesedStorage.Local
 
 				RatingDetails.CheeseName = cheeseDetail.CheeseName;
 				this.CheeseName = cheeseDetail.CheeseName;
-				OnPropertyChanged("CheeseName");
+				OnPropertyChanged ("CheeseName");
 
 				RatingDetails.DairyName = cheeseDetail.DairyName;
 				this.DairyName = cheeseDetail.DairyName;
-				OnPropertyChanged("DairyName");
+				OnPropertyChanged ("DairyName");
 
 				RatingDescription = string.Format ("This {0} cheese was rated on {1}, and was given {2} wedges." +
 				System.Environment.NewLine + "The taste complexities were noted by the following: {3}",
@@ -68,6 +87,12 @@ namespace CheesedStorage.Local
 
 				Title = RatingDetails.CheeseName;
 				OnPropertyChanged ("Title");
+
+				// Grab the cheese photo blob
+				if (string.IsNullOrEmpty (RatingDetails.PhotoUrl) == false) {
+					CheesePhotoUri = new Uri(RatingDetails.PhotoUrl);
+					OnPropertyChanged("CheesePhotoUri");
+				}
 
 			} catch (NoInternetException) {
 				await Page.DisplayAlert ("No Internet!", "Cannot Access The Internet!", "Darn!");
@@ -84,6 +109,20 @@ namespace CheesedStorage.Local
 				return _GetRatingDetailsCommand ?? (_GetRatingDetailsCommand = new Command (async () => await ExecuteGetRatingDetailsCommand ()));
 			}
 		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+			if (CheesePhoto != null) {
+				CheesePhoto.Dispose ();
+				CheesePhoto = null;
+			}
+		
+		}
+
+		#endregion
+
 
 		#region INotifyPropertyChanged implementation
 

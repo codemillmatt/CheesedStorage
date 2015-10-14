@@ -8,6 +8,7 @@ namespace CheesedStorage.Local
 	{
 		public Rating ()
 		{
+			
 		}
 			
 		[PrimaryKey, JsonProperty("Id")]
@@ -36,6 +37,15 @@ namespace CheesedStorage.Local
 			set;
 		}
 
+		public string AudioUrl {
+			get;
+			set;
+		}
+
+		public string PhotoUrl {
+			get;
+			set;
+		}
 	}
 }
 

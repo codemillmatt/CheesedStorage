@@ -2,6 +2,7 @@
 
 using Xamarin.Forms;
 
+
 namespace CheesedStorage.Local
 {
 	public class AddCheeseAndRatingView : ContentPage
@@ -40,8 +41,8 @@ namespace CheesedStorage.Local
 				Text = "Rating:"
 			};
 							
-var ratingView = new RatingView (true);
-ratingView.SetBinding (RatingView.WedgeRatingProperty, "CheeseToAdd.WedgeRating");
+			var ratingView = new RatingView (true);
+			ratingView.SetBinding (RatingView.WedgeRatingProperty, "CheeseToAdd.WedgeRating");
 
 			var notesLabel = new Label () {
 				Text = "Notes:"

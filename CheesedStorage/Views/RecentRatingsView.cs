@@ -51,7 +51,7 @@ namespace CheesedStorage.Local
 			};
 			addNewButton.Clicked += AddNewCheese;
 
-			var headerImage = new Image { Source = "Rectangle1.png" };
+			var headerImage = new Image { Source = "Rectangle1.png", Aspect = Aspect.AspectFill };
 
 			Content = new StackLayout { 
 				Children = {

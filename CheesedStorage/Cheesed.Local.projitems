@@ -6,14 +6,13 @@
     <SharedGUID>{E5005E99-6C0A-4BCF-92A1-7DBF3AFEA463}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Cheesed.Local</Import_RootNamespace>
+    <Import_RootNamespace>CheesedStorage.Local</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Model\Cheese.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Rating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPlatform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICheeseDataService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DataService\LocalCheeseDataService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\RecentRatingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\RecentRatingsView.cs" />
@@ -27,7 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\RatingDetailView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\RatingDetailViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataService\AzureCheeseDataService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DataService\OfflineCheeseDataService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\NoInternetException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\CardView\CardView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\CardView\CardStatusView.cs" />
@@ -35,6 +33,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)CheeseColors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\CardView\WedgeView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Rating\RatingView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICheeseStorageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StorageService\CheeseStorageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AzureConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CameraView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\AudioVideoViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messaging\StorageCompleteMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Model\" />
@@ -45,5 +49,8 @@
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\CardView\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Rating\" />
+    <Folder Include="$(MSBuildThisFileDirectory)StorageService\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Messaging\" />
   </ItemGroup>
 </Project>

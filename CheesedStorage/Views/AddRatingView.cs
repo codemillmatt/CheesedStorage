@@ -84,6 +84,17 @@ namespace CheesedStorage.Local
 				await Navigation.PopAsync(true);
 			};
 
+			var cameraImage = new FileImageSource ();
+			cameraImage.File = "Camera.png";
+
+			var cameraButton = new Button () { Image = cameraImage, Text="Take Photo" };
+
+			cameraButton.Clicked += async (sender, e) => {
+				var cv = new CameraView();
+
+				await Navigation.PushModalAsync(cv);
+			};
+
 			var scroll = new ScrollView ();
 
 			scroll.Content = new StackLayout { 
@@ -91,11 +102,12 @@ namespace CheesedStorage.Local
 					cheeseName,
 					dairyName,
 					entryGrid,
+					cameraButton,
 					grid
 				}
 			};
 
-			var headerImage = new Image { Source = "Header.png" };
+			var headerImage = new Image { Source = "Rectangle1.png", Aspect = Aspect.AspectFill };
 
 			Content = new StackLayout() { 
 				Children = {

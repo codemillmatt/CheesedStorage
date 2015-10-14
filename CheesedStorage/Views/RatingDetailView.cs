@@ -1,12 +1,15 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace CheesedStorage.Local
 {
 	public class RatingDetailView : ContentPage
 	{
 		RatingDetailViewModel _viewModel;
+		Image _backgroundImage;
 
 		public RatingDetailView (CheeseAndRating theRating)
 		{
@@ -33,18 +36,21 @@ namespace CheesedStorage.Local
 			};
 			dairyName.SetBinding (Label.TextProperty, "DairyName");
 
-			var image = new Image () {
-				Source = ImageSource.FromFile ("Dairy_cow.jpg"),
+			UriImageSource uriImgSource = new UriImageSource ();
+			uriImgSource.SetBinding (UriImageSource.UriProperty, "CheesePhotoUri");
+
+			_backgroundImage = new Image () {
+				Source = uriImgSource,
 				Aspect = Aspect.AspectFill,
 			};
-
+				 
 			var overlay = new BoxView () {
 				Color = Color.Black.MultiplyAlpha (.7f)
 			};
 					
 			var notesLabel = new Label () {
 				FontSize = 14,
-				TextColor = Color.FromHex("#ddd")
+				TextColor = Color.FromHex ("#ddd")
 			};
 
 			notesLabel.SetBinding (Label.TextProperty, "RatingDescription");
@@ -55,12 +61,12 @@ namespace CheesedStorage.Local
 				BackgroundColor = Color.Transparent,
 				Content = notesLabel
 			};
-
+					
 			AbsoluteLayout.SetLayoutFlags (overlay, AbsoluteLayoutFlags.All);
 			AbsoluteLayout.SetLayoutBounds (overlay, new Rectangle (0, 1, 1, 0.3));
 
-			AbsoluteLayout.SetLayoutFlags (image, AbsoluteLayoutFlags.All);
-			AbsoluteLayout.SetLayoutBounds (image, new Rectangle (0f, 0f, 1f, 1f));
+			AbsoluteLayout.SetLayoutFlags (_backgroundImage, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds (_backgroundImage, new Rectangle (0f, 0f, 1f, 1f));
 
 			AbsoluteLayout.SetLayoutFlags (cheeseName, AbsoluteLayoutFlags.PositionProportional);
 			AbsoluteLayout.SetLayoutBounds (cheeseName, 
@@ -72,31 +78,26 @@ namespace CheesedStorage.Local
 				new Rectangle (0.1, 0.95, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize)
 			);
 				
-			cheeseInfoLayout.Children.Add (image);
+			cheeseInfoLayout.Children.Add (_backgroundImage);
 			cheeseInfoLayout.Children.Add (overlay);
 			cheeseInfoLayout.Children.Add (cheeseName);
 			cheeseInfoLayout.Children.Add (dairyName);
-//			cheeseInfoLayout.Children.Add (pin);
-
-//			var page = new ContentPage { Content = new StackLayout () {
-//					BackgroundColor = Color.FromHex ("#333"),
-//					Children = {
-//						cheeseInfoLayout,
-//						description,
-//					}	
-//				}
-//			};
-//
-//			Content = page;
 
 			Content = new StackLayout () {
 				BackgroundColor = Color.FromHex ("#333"),
 				Children = {
 					cheeseInfoLayout, description
 				}
-			};
+			};					
+		}
 
+		protected override void OnDisappearing ()
+		{
+			base.OnDisappearing ();
 
+			// Since when this page disappears it will always be reloaded (always being popped off the nav stack), 
+			// let's dispose of the view model
+			_viewModel.Dispose ();
 		}
 
 		protected override void OnAppearing ()

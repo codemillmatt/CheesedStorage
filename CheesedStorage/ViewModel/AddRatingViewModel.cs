@@ -13,10 +13,22 @@ namespace CheesedStorage.Local
 			get;
 			set;
 		}
-			
+
 		public AddRatingViewModel (Cheese cheese, ContentPage page)
 		{
 			_dataService = DependencyService.Get<ICheeseDataService> ();
+
+			MessagingCenter.Subscribe<AudioVideoViewModel, StorageCompleteMessage> (
+				this, AzureConstants.PhotoStorageComplete,
+				(avvm, scm) => {
+					RatingToAdd.PhotoUrl = scm.StorageUrl;
+				});
+
+			MessagingCenter.Subscribe<AudioVideoViewModel, StorageCompleteMessage> (
+				this, AzureConstants.AudioStorageComplete,
+				(avvm, scm) => {
+					RatingToAdd.AudioUrl = scm.StorageUrl;
+				});
 
 			RatingToAdd = new CheeseAndRating () {
 				CheeseId = cheese.CheeseId,
@@ -36,9 +48,11 @@ namespace CheesedStorage.Local
 					CheeseId = RatingToAdd.CheeseId,
 					DateRated = DateTime.Now,
 					Notes = RatingToAdd.Notes,
-					WedgeRating = RatingToAdd.WedgeRating
+					WedgeRating = RatingToAdd.WedgeRating,
+					PhotoUrl = RatingToAdd.PhotoUrl ?? string.Empty,
+					AudioUrl = RatingToAdd.AudioUrl ?? string.Empty
 				};
-
+						
 				rating = await _dataService.RateCheeseAsync (rating);
 
 				RatingToAdd.RatingId = rating.RatingId;
@@ -61,6 +75,9 @@ namespace CheesedStorage.Local
 				}));
 			}
 		}
+
+
+
 	}
 }
 

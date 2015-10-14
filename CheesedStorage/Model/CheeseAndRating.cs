@@ -43,6 +43,16 @@ namespace CheesedStorage.Local
 			get;
 			set;
 		}
+
+		public string AudioUrl {
+			get;
+			set;
+		}
+
+		public string PhotoUrl {
+			get;
+			set;
+		}
 	}
 }
 
