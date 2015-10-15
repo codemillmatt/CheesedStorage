@@ -6,6 +6,9 @@ using Foundation;
 using CoreGraphics;
 using Xamarin.Forms;
 
+// Implementation via Pierce Boggan
+// https://github.com/pierceboggan/Moments/blob/master/Moments%20-%20CSharp/Moments.iOS/Pages/CameraPage.cs
+
 [assembly:ExportRenderer(typeof(CheesedStorage.Local.CameraView), typeof(CheesedStorage.Local.iOS.CameraView))]
 namespace CheesedStorage.Local.iOS
 {
