@@ -4,6 +4,9 @@ using Xamarin.Forms;
 
 namespace CheesedStorage.Local
 {
+	// "Card" cell view via:
+	// https://www.syntaxismyui.com/xamarin-forms-in-anger-cards/
+
 	public class CardDetailsView : ContentView
 	{		
 		Label TitleText;

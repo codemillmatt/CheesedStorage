@@ -6,6 +6,9 @@ using System.IO;
 
 namespace CheesedStorage.Local
 {
+	// Overall UI design look & feel inspired via
+	// https://www.syntaxismyui.com/xamarin-forms-in-anger-phoenix-peaks/
+
 	public class RatingDetailView : ContentPage
 	{
 		RatingDetailViewModel _viewModel;
